@@ -9,7 +9,42 @@ var allTracks = [],		// An array for all the files loaded in the track
 	timer = 0;			// An interval for the track's current time.
 
 
+// load predefined data set
+function loadLocalFiles() {
+	var URL = window.URL || window.webkitURL;
+	var files = [
+			  "assets/music/1.mp3"
+			, "assets/music/2.mp3"  
+			, "assets/music/3.mp3"
+  ];
+
+	for(var j=0; j<files.length; j++){
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', files[j], true);
+		xhr.responseType = 'blob';
+
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+		    var blob = this.response;
+		    var track = document.createElement('audio');
+		    track.onload = function(e) {
+		      window.URL.revokeObjectURL(track.src); // Clean up after yourself.
+		    };
+		    getID3Data(blob, function (song) {
+					allTracks.push(song);
+					playlist.push(song);
+					$('#list').append($(returnTrackHTML(song, playlist.length-1)));
+				});
+		  }
+		};
+		xhr.send();
+	}
+};
+
+loadLocalFiles();
+
 startPlayerWhenReady();
+
 
 
 /*---------------------
@@ -51,6 +86,7 @@ dropZone.on('drop', function(e) {
 		var items = e.originalEvent.dataTransfer.items;
 		for(var j=0; j<items.length; j++){
 			var item = items[j].webkitGetAsEntry();
+			console.warn(item);
 			if(item){
 				traverseFileTree(item);
 			}
@@ -148,6 +184,7 @@ function getTags(file,done){
 		tags: ["artist", "title", "album", "picture"],
 		dataReader: FileAPIReader(file)
 	});
+			console.warn('image change');
 
 }
 
@@ -184,8 +221,8 @@ wavesurfer.init({
 	cursorColor: '#aaa',
 	cursorWidth: 1,
 	height: 80,
-	waveColor: '#588efb',
-	progressColor: '#f043a4'
+	waveColor: '#5A5A5A',
+	progressColor: '#084C00'
 });
 
 
@@ -225,6 +262,8 @@ wavesurfer.on('ready', function () {
 
 	if(playlist[i]){
 		document.title = playlist[i].artist + ' - ' + playlist[i].title;
+
+		updateFavicon(playlist[i].picture);		// Set the favicon to the cover art
 
 		// Set cover art.
 
@@ -630,6 +669,16 @@ function searchTracks(query){
 /*-------------------
  	Helper Functions
 --------------------*/
+// Change the favicon to the album art
+function updateFavicon(img){
+	$("link[rel='shortcut icon']").remove();
+
+  var link = document.createElement('link');
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = img;
+  document.getElementsByTagName('head')[0].appendChild(link);
+}
 
 //Automatically start playlist on file load.
 function startPlayerWhenReady(){
