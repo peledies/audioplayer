@@ -1,4 +1,3 @@
-
 var allTracks = [],		// An array for all the files loaded in the track
 	playlist = [], 		// An array for the current playlist
 	temporarySearchPlaylist = [],	// A helper array for when we are searching
@@ -6,17 +5,44 @@ var allTracks = [],		// An array for all the files loaded in the track
 	shuffle = false,	// Shuffle flag
 	repeat = 0,			// Repeat flag
 	lastPlayed = [],	// Array for last played (used when shuffling songs)
-	timer = 0;			// An interval for the track's current time.
+	timer = 0,			// An interval for the track's current time.
+	album = [];
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var directory = getParameterByName('d');
+
+ console.warn(directory); 
+ $.ajax({
+   url: 'directory_list.php',
+   type: 'POST',
+   dataType: 'json',
+   data: {dir: directory},
+   complete: function(xhr, textStatus) {
+     //called when complete
+   },
+   success: function(data, textStatus, xhr) {
+   	for (var i = 0; i < data.length; i++) {
+   		data[i] = 'assets/Music/'+directory+'/'+data[i];
+   	};
+   	loadLocalFiles(data);
+   	 console.warn(data);
+     //called when successful
+   },
+   error: function(xhr, textStatus, errorThrown) {
+     //called when there is an error
+   }
+ });
 
 // load predefined data set
-function loadLocalFiles() {
+function loadLocalFiles(album) {
 	var URL = window.URL || window.webkitURL;
-	var files = [
-			  "assets/music/1.mp3"
-			, "assets/music/2.mp3"  
-			, "assets/music/3.mp3"
-  ];
+	var files = album;
 
 	for(var j=0; j<files.length; j++){
 		var xhr = new XMLHttpRequest();
@@ -40,12 +66,13 @@ function loadLocalFiles() {
 		xhr.send();
 	}
 };
-
-loadLocalFiles();
+		
+$('#album-list').on('click', function(){
+	 console.warn('here'); 
+	window.location.assign("index.php");
+});
 
 startPlayerWhenReady();
-
-
 
 /*---------------------
 	Dropping files

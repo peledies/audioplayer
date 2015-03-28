@@ -73,7 +73,7 @@ body, html{
 	flex: 1;
 	background-color: #26292C;
 	background-size: cover;
-	-webkit-filter: blur(7px);
+	-webkit-filter: blur(15px);
 	margin: -12px ;
 }
 
@@ -380,6 +380,17 @@ body, html{
 	opacity: 1;
 }
 
+#album-list{
+	position:absolute;
+	z-index:2;
+	padding:15px;
+	background-color:#ffffff;
+	margin:10px;
+	-webkit-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+-moz-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+cursor: pointer;
+}
 /*---------------------------
 		Media queries
 ---------------------------*/
