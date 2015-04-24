@@ -1,0 +1,19 @@
+.song {
+  background-color: #fff;
+  border-bottom: dotted 1px #ddd;
+  color: #333;
+  font-size: 0.875em;
+  font-weight: normal;
+  list-style-type: none;
+  padding: 0.9375em;
+}
+.no-songs {
+  background-color: #fAA;
+  border-bottom: dotted 1px #ddd;
+  color: #333;
+  font-size: 0.875em;
+  font-weight: normal;
+  list-style-type: none;
+  padding: 0.9375em;
+  text-align: center;
+}

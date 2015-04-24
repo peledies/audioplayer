@@ -380,6 +380,10 @@ body, html{
 	opacity: 1;
 }
 
+
+/*---------------------------
+		Deac's additions
+---------------------------*/
 #album-list{
 	position:absolute;
 	z-index:2;
@@ -387,9 +391,9 @@ body, html{
 	background-color:#ffffff;
 	margin:10px;
 	-webkit-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
--moz-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
-cursor: pointer;
+	-moz-box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+	cursor: pointer;
 }
 /*---------------------------
 		Media queries

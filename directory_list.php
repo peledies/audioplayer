@@ -24,8 +24,10 @@
      return $result; 
   } 
 
-  $dir = $_POST['dir'];
-  $files = dirToArray('assets/Music/'.$dir);
-  header('Content-Type: application/json');
-  echo json_encode($files);
+  if(isset($_POST['dir'])){
+    $files = dirToArray('assets/Music/'.$_POST['dir']);
+    header('Content-Type: application/json');
+    echo json_encode($files);
+  }
+  
 ?>

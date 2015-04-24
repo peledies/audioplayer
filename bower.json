@@ -12,5 +12,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "1.9.1",
+    "foundation": "~5.5.1"
+  }
 }
